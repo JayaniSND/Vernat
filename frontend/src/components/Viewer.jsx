@@ -400,17 +400,21 @@ const Viewer = forwardRef(function Viewer({ meshUrl, activeHour, showAfter, room
       {/* Heatmap legend */}
       <div style={{
         position: "absolute", top: 16, right: 16,
-        background: "rgba(0,0,0,0.6)", borderRadius: 8, padding: "10px 14px",
+        background: "rgba(0,0,0,0.6)", borderRadius: 8, padding: "10px 12px",
         fontSize: 11, color: "#fff",
       }}>
-        <div style={{ marginBottom: 4, fontWeight: 500 }}>Surface temp</div>
-        <div style={{
-          width: 20, height: 100,
-          background: "linear-gradient(to bottom, #ff0000, #0000ff)",
-          borderRadius: 4, margin: "4px auto",
-        }} />
-        <div>55°C</div>
-        <div style={{ marginTop: 78 }}>25°C</div>
+        <div style={{ fontWeight: 500, marginBottom: 6 }}>Surface temp</div>
+        <div style={{ display: "flex", alignItems: "stretch", gap: 6 }}>
+          <div style={{
+            width: 14, height: 80, flexShrink: 0,
+            background: "linear-gradient(to bottom, #ff0000, #0000ff)",
+            borderRadius: 3,
+          }} />
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", color: "#ccc", fontSize: 10 }}>
+            <span>55°C</span>
+            <span>25°C</span>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -147,7 +147,6 @@ export default function App() {
   const [addr,          setAddr]          = useState({ city: "", state: "", country: "" })
   const [reconJob,      setReconJob]      = useState(null)
   const [buildingPhoto, setBuildingPhoto] = useState(null)
-  const [floorplanUrl,  setFloorplanUrl]  = useState(null)
   const [meshUrl,       setMeshUrl]       = useState(null)
   const [thermalData,   setThermalData]   = useState(null)
   const [ventData,      setVentData]      = useState(null)
@@ -200,10 +199,9 @@ export default function App() {
     setStep(2)
   }
 
-  function onUploadComplete(job, photo, fpFile) {
+  function onUploadComplete(job, photo) {
     setReconJob(job)
     setBuildingPhoto(photo ?? null)
-    if (fpFile) setFloorplanUrl(URL.createObjectURL(fpFile))
     setStep(3)
   }
 
@@ -214,42 +212,64 @@ export default function App() {
     setMeshUrl(`${API}/reconstruction/mesh/${reconJob?.job_id}`)
     setStep(5)
 
+    // ── Thermal simulation ─────────────────────────────────────────────────
     setLoadingMsg("Running thermal simulation…")
-    const thermal = await fetch(`${API}/thermal/simulate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        job_id:   reconJob?.job_id,
-        lat, lon,
-        surfaces: buildSurfaces(props),
-      }),
-    }).then(r => r.json())
-    setThermalData(thermal)
+    let thermal = null
+    try {
+      console.log("[thermal] POST", `${API}/thermal/simulate`)
+      const res = await fetch(`${API}/thermal/simulate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ job_id: reconJob?.job_id, lat, lon, surfaces: buildSurfaces(props) }),
+      })
+      thermal = await res.json()
+      console.log("[thermal] result:", thermal)
+      setThermalData(thermal)
+    } catch (err) {
+      console.error("[thermal] failed:", err)
+    }
 
+    // ── Ventilation analysis ───────────────────────────────────────────────
     setLoadingMsg("Analysing ventilation…")
-    const vent = await fetch(`${API}/ventilation/analyse`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lat, lon }),
-    }).then(r => r.json())
-    setVentData(vent)
+    let vent = null
+    try {
+      console.log("[ventilation] POST", `${API}/ventilation/analyse`)
+      const res = await fetch(`${API}/ventilation/analyse`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lat, lon }),
+      })
+      vent = await res.json()
+      console.log("[ventilation] result:", vent)
+      setVentData(vent)
+    } catch (err) {
+      console.error("[ventilation] failed:", err)
+    }
 
+    // ── Prescription recommendations ───────────────────────────────────────
     setLoadingMsg("Generating recommendations…")
-    const worstSurface = thermal.surfaces?.find(s => s.is_worst)
-    const deadZones    = vent.rooms?.filter(r => r.is_dead_zone).map(r => r.id) ?? []
+    try {
+      const worstSurface = thermal?.surfaces?.find(s => s.is_worst)
+      const deadZones    = vent?.rooms?.filter(r => r.is_dead_zone).map(r => r.id) ?? []
+      console.log("[prescription] POST", `${API}/prescription/recommend`)
+      const res = await fetch(`${API}/prescription/recommend`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          worst_surface_material: worstSurface?.material ?? props.wallMaterial,
+          peak_temp_c:            worstSurface?.peak_temp ?? 42,
+          dead_zone_rooms:        deadZones,
+          climate_zone:           getClimateZone(lat),
+          lat, lon,
+        }),
+      })
+      const rx = await res.json()
+      console.log("[prescription] result:", rx)
+      setPrescriptions(rx.prescriptions ?? [])
+    } catch (err) {
+      console.error("[prescription] failed:", err)
+    }
 
-    const rx = await fetch(`${API}/prescription/recommend`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        worst_surface_material: worstSurface?.material ?? props.wallMaterial,
-        peak_temp_c:            worstSurface?.peak_temp ?? 42,
-        dead_zone_rooms:        deadZones,
-        climate_zone:           getClimateZone(lat),
-        lat, lon,
-      }),
-    }).then(r => r.json())
-    setPrescriptions(rx.prescriptions ?? [])
     setLoadingMsg(null)
   }
 
@@ -509,21 +529,6 @@ export default function App() {
           background: "#1a1a1a", borderRight: "1px solid #222",
           display: "flex", flexDirection: "column",
         }}>
-          {/* Floorplan thumbnail */}
-          {floorplanUrl && (
-            <div style={{ borderBottom: "1px solid #333", flexShrink: 0 }}>
-              <img
-                src={floorplanUrl}
-                alt="Floorplan"
-                style={{
-                  width: "100%", maxHeight: 160,
-                  objectFit: "contain", display: "block",
-                  background: "#0a0a0a",
-                }}
-              />
-            </div>
-          )}
-
           <div style={{
             padding: "10px 16px", borderBottom: "1px solid #222",
             display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -626,25 +631,24 @@ export default function App() {
             }}>
               Vernacular<br />Interventions
             </div>
-            {prescriptions.length > 0 && (
+            {prescriptions.length > 0 ? (
               <div style={{ marginTop: 6, fontSize: 12, color: "#999" }}>
                 {prescriptions.length} recommendations ranked by impact
               </div>
-            )}
-            {loadingMsg && prescriptions.length === 0 && (
+            ) : thermalData ? (
               <div style={{ marginTop: 8, fontSize: 12, color: "#bbb",
                             display: "flex", alignItems: "center", gap: 6 }}>
                 <span style={{
                   width: 6, height: 6, borderRadius: "50%",
                   background: "#e07a3a", display: "inline-block", flexShrink: 0,
                 }} />
-                {loadingMsg}
+                {loadingMsg ?? "Processing…"}
               </div>
-            )}
+            ) : null}
           </div>
 
           <div style={{ flex: 1, overflowY: "auto", padding: "18px 20px" }}>
-            <Prescriptions items={prescriptions} />
+            <Prescriptions items={prescriptions} loading={!!thermalData && prescriptions.length === 0} />
           </div>
         </aside>
       </div>

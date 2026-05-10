@@ -115,19 +115,32 @@ const COST_LABEL = {
 // Distinct accent colors for card left borders (cycles if > 6 items)
 const CARD_ACCENTS = ["#e07a3a", "#5c6bc0", "#26a69a", "#ef5350", "#ab47bc", "#29b6f6"]
 
-export function Prescriptions({ items }) {
-  if (!items?.length) return (
-    <div style={{
-      display: "flex", flexDirection: "column",
-      alignItems: "center", justifyContent: "center",
-      minHeight: 220, gap: 10, textAlign: "center",
-    }}>
-      <div style={{ fontSize: 36, opacity: 0.18 }}>🏛</div>
-      <div style={{ fontSize: 13, color: "#bbb", lineHeight: 1.5 }}>
-        Complete the building analysis<br />to see vernacular recommendations
+export function Prescriptions({ items, loading }) {
+  if (!items?.length) {
+    if (loading) return (
+      <div style={{
+        display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center",
+        minHeight: 220, gap: 10, textAlign: "center",
+      }}>
+        <div style={{ fontSize: 13, color: "#bbb", lineHeight: 1.5 }}>
+          Analysing building…
+        </div>
       </div>
-    </div>
-  )
+    )
+    return (
+      <div style={{
+        display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center",
+        minHeight: 220, gap: 10, textAlign: "center",
+      }}>
+        <div style={{ fontSize: 36, opacity: 0.18 }}>🏛</div>
+        <div style={{ fontSize: 13, color: "#bbb", lineHeight: 1.5 }}>
+          Complete the building analysis<br />to see vernacular recommendations
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
