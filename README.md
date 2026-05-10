@@ -15,7 +15,7 @@ Vernat takes a floorplan image, reconstructs it as a navigable 3D model, simulat
 ## Pipeline
 
 ```
-Floorplan image (JPG / PNG / hand sketch)
+Floorplan image (JPG / PNG / hand sketch) Other file types not supported
       │
       ├─ CubiCasa5K (HRNetV2 semantic segmentation)
       │    → room type + bounding box per room
