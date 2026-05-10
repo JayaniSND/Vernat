@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-
 # Dependency Directories
 backend/venv/
 frontend/node_modules/
