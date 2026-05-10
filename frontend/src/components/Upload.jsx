@@ -30,11 +30,11 @@ export default function Upload({ API, onComplete }) {
     form.append("file", floorplan)
 
     try {
-      const result = await fetch(`${API}/reconstruction/upload?scale=50`, {
+      const res    = await fetch(`${API}/reconstruction/upload?scale=50`, {
         method: "POST", body: form,
-      }).then(r => r.json())
-
-      if (result.detail) throw new Error(result.detail)
+      })
+      const result = await res.json()
+      if (!res.ok) throw new Error(result.detail ?? "Upload failed")
       setStatus("idle")
       onComplete(result, null, floorplan)
     } catch (e) {
@@ -113,13 +113,29 @@ export default function Upload({ API, onComplete }) {
         )}
 
         {status === "error" && (
-          <div style={{ textAlign: "center" }}>
-            <div style={{ color: "#e05a3a", fontSize: 13, marginBottom: 12 }}>{message}</div>
-            <button onClick={() => setStatus("idle")}
+          <div>
+            <div style={{
+              color: "#c0392b", fontSize: 13, fontWeight: 500,
+              background: "#fdf2f0", border: "1px solid #f5c6c0",
+              borderRadius: 8, padding: "10px 14px", marginBottom: 10,
+              lineHeight: 1.5,
+            }}>
+              {message}
+            </div>
+            <div style={{
+              color: "#888", fontSize: 11, lineHeight: 1.6,
+              background: "#fafafa", border: "1px solid #eee",
+              borderRadius: 8, padding: "8px 12px", marginBottom: 14,
+            }}>
+              <strong style={{ color: "#555" }}>Tips:</strong> use a clear image with labeled rooms,
+              visible borders, and good contrast.
+            </div>
+            <button
+              onClick={() => { setStatus("idle"); setMessage("") }}
               style={{
-                padding: "8px 20px", borderRadius: 7,
-                border: "1px solid #ddd", background: "#fff",
-                color: "#555", cursor: "pointer", fontSize: 13,
+                width: "100%", padding: "10px 0", borderRadius: 8,
+                border: "1px solid #d0d0d0", background: "#f5f5f5",
+                color: "#444", cursor: "pointer", fontSize: 13, fontWeight: 500,
               }}>
               Try again
             </button>
