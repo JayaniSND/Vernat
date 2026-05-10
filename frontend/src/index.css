@@ -1,7 +1,7 @@
 *, *::before, *::after {
   box-sizing: border-box;
 }
-//text/font
+
 body {
   margin: 0;
   background-color: #f5f5f0;
