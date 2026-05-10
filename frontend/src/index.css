@@ -1,0 +1,23 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f5f5f0;
+  background-image:
+    linear-gradient(#e0e0e0 1px, transparent 1px),
+    linear-gradient(90deg, #e0e0e0 1px, transparent 1px),
+    linear-gradient(#ebebeb 1px, transparent 1px),
+    linear-gradient(90deg, #ebebeb 1px, transparent 1px),
+    linear-gradient(rgba(245, 245, 240, 0.80), rgba(245, 245, 240, 0.80)),
+    url('/buildings.jpg');
+  background-size:
+    50px 50px, 50px 50px, 10px 10px, 10px 10px,
+    cover, cover;
+  background-position:
+    -1px -1px, -1px -1px, -1px -1px, -1px -1px,
+    center center, center center;
+  background-attachment: fixed;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
