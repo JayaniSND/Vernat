@@ -5,19 +5,17 @@
 
 ## Inspiration
 
-> "Western architecture was imposed on climates it was never designed for. Centuries of vernacular wisdom: jali screens, courtyards, badgirs, lime wash were discarded. Cities are now paying for it in heat, energy, and livlihoods.
+Across much of the World, glass-and-concrete buildings bake in climates they were never designed for. The problem hits hardest for those without AC or the means to retrofit but it affects everyone. Higher energy bills, hotter streets, more strained grids. A city full of buildings fighting their own climate instead of working with it.
 
-Urban heat islands disproportionately affect low-income communities in the Global South. These are the same communities where glass-and-concrete architecture was imposed on climates it was never designed for. The same communities with no AC, no retrofits, no recourse.
-
-The solutions already exist. Wind catchers, courtyards, jali screens, earthen walls, vernacular techniques refined over centuries for exactly these climates. They were sidelined. Vernat brings them back. It's grounded in physics and accessible without an architect.
+This was never just one culture's problem, and the solutions were never just one culture's invention. Every civilization developed its own building intelligence, tuned to its own climate.
+ 
+Indian architecture formalised this in Vastu Shastra: a system of spatial orientation based on sun position, cardinal directions, and airflow that determined where rooms sat, where openings faced, and how a building breathed. Chinese architecture did the same through Feng Shui, positioning structures to work with prevailing winds and solar paths rather than against them. Native American peoples built with the land: cliff dwellings carved into south-facing rock faces for winter sun and summer shade, adobe structures with thick thermal mass that absorbed heat by day and released it at night. Across the Middle East and North Africa, wind catchers and courtyard layouts were engineering solutions, not aesthetic ones.
 
 ---
 
 ## What It Does
 
-Vernat takes a floor plan image (including hand-drawn sketches) and reconstructs it as a navigable 3D model, simulates how heat moves through the space across a 24-hour solar cycle, and recommends vernacular interventions ranked by thermal impact and cost: jali screens, green roofs, courtyard openings, lime wash, earthen walls.
-
-No AC and expensive retrofits. Rather it promotes interventions drawn from the same traditions the building should have been designed with in the first place, those better designed for the climate and it's people.
+Vernat takes a floor plan image (including hand-drawn sketches) and reconstructs it as a navigable 3D model, simulates how heat moves through the space across a 24-hour solar cycle, and recommends vernacular interventions ranked by thermal impact and cost: jali screens, green roofs, courtyard openings, lime wash, earthen walls, etc.
 
 ---
 
