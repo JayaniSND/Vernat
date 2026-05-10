@@ -8,7 +8,7 @@ Tackling urban heat islands with computer vision, 3D reconstruction, and thermal
 
 ## What it does
 
-Vernat takes a floorplan image, reconstructs it as a navigable 3D model, simulates how heat moves through the space across a 24-hour solar cycle, and recommends culturally-grounded vernacular interventions — jali screens, green roofs, courtyard openings, lime wash, earthen walls — ranked by thermal impact and cost.
+Vernat takes a floorplan image, reconstructs it as a navigable 3D model, simulates how heat moves through the space across a 24-hour solar cycle, and recommends culturally-grounded vernacular interventions, jali screens, green roofs, courtyard openings, lime wash, earthen walls, ranked by thermal impact and cost.
 
 ---
 
