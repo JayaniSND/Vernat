@@ -40,7 +40,7 @@ Floorplan image (JPG / PNG / hand sketch)
       │    → solar gain − thermal mass decay − convective loss
       │    → per-material time-series temperatures
       │
-      ├─ NetworkX ventilation graph
+      ├─ NetworkX ventilation graph (Not shown in demo)
       │    → max-flow / Dijkstra dead zone detection
       │
       └─ FAISS + Gemini 2.5 Flash RAG
