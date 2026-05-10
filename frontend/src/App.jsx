@@ -12,6 +12,7 @@ function getClimateZone(lat) {
   if (a < 35) return "subtropical"
   if (a < 50) return "temperate"
   return "cold"
+  //understanding subretion based on coordinates
 }
 
 const MAT_MAP = {
