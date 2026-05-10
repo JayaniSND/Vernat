@@ -52,6 +52,8 @@ Floorplan image (JPG / PNG / hand sketch)
 
 ## Tech Stack
 
+Follow the steps to load this locally on your computer
+
 ### Backend (Python 3.12)
 
 | Component | Library / Version |
