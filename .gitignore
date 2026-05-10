@@ -1,0 +1,51 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+# Dependency Directories
+backend/venv/
+frontend/node_modules/
+
+# Python Cache and Build files
+__pycache__/
+*.pyc
+backend/__pycache__/
+
+# Large Model Weights and Data
+# (Assuming Cubiadd all large files to git ignore Casa5K weights or large datasets are stored here)
+backend/cubicasa5k/
+*.pkl
+*.h5
+*.pth
+
+# External Tools and Build Outputs
+colmap/
+frontend/dist/
+*.ply
+*.obj
+
+# Environment and Private Files
+.env
+backend/.env

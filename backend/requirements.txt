@@ -1,0 +1,21 @@
+# CubiCasa5K is installed from the cloned repo via sys.path (see cubicasa_detector.py).
+# Run: pip install torch torchvision  (required by CubiCasa5K)
+# Then download model weights to ~/.cache/cubicasa5k/model_best_val_loss_var.pkl
+torch>=1.9.0
+torchvision>=0.10.0
+fastapi==0.111.0
+uvicorn==0.29.0
+python-multipart==0.0.9
+opencv-python==4.9.0.80
+numpy==1.26.4
+open3d==0.19.0
+pysolar==0.11
+pvlib==0.10.5
+faiss-cpu==1.8.0
+google-generativeai==0.8.3
+ultralytics==8.2.0
+networkx==3.3
+scipy==1.13.0
+trimesh==4.3.2
+Pillow==10.3.0
+python-dotenv==1.0.1
